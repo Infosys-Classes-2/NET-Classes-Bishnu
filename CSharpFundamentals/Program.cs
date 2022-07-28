@@ -1,6 +1,5 @@
 ﻿using System;
 
-Console.WriteLine("Your name: ");
-string name = Console.ReadLine();
+var firstName = "Ram";
+Console.WriteLine($"Hello, {firstName}");
 
-Console.WriteLine($"Hello, {name}");
