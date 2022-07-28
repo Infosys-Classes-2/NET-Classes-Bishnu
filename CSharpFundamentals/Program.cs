@@ -60,7 +60,6 @@ matrix[1, 2] = 67.1;
 
 double[,] table = { { 2, 3 }, { 5, 6 } };
 
-
 // Jagged array
 short[][] data = new short[4][];
 
