@@ -63,13 +63,32 @@ internal class BranchesAndLoops
     internal void LearnLooping()
     {
         //for
-        for(int i = 1; i <= 500; i += 2)
-        {
-            //check for primality
-            Console.WriteLine(i);
-        }
+        // for(int i = 1; i <= 500; i++)
+        // {
+        //     //check for primality
+        //     Console.WriteLine(i);
+        // }
+
         //while
+        ConsoleKeyInfo keyInfo = new();
+        while(keyInfo.Key != ConsoleKey.Escape)
+        {
+            Console.WriteLine("Hello");
+            keyInfo = Console.ReadKey();
+        }
+
         //do-while
         //foreach
+        byte[] ages = {34, 56, 23, 12, 21, 98, 54};
+
+        for(int x = 0; x < ages.Length; x++)
+        {
+            Console.WriteLine(ages[x]);
+        }  
+
+        foreach(var age in ages)
+        {
+            Console.WriteLine(age);
+        }   
     }
 }
