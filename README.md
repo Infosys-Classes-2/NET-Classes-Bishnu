@@ -6,5 +6,15 @@
 ## Assignments
 1. Program to calculate area of circle.
 1. Program to convert days to years, months, weeks and days.
+1. Program to print prime numbers less than 500.
+1. Program to print following pattern:
+    ```
+    1
+    12
+    123
+    1234
+    12345
+    123456
+    ```
 
 ## Projects
