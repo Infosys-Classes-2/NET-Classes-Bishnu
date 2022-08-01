@@ -1,5 +1,4 @@
 // Animal 
-
 using System;
 
 internal class Animal
