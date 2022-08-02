@@ -1,3 +1,5 @@
+using System;
+
 class TestClasses
 {
     public static void Main()
@@ -15,7 +17,13 @@ class TestClasses
         // BranchesAndLoops br = new();
         // br.LearnLooping();
 
-        Assignment2 assignment2 = new();
-        assignment2.PrintPattern();
+        // Assignment2 assignment2 = new();
+        // assignment2.PrintPattern();
+
+        MethodLearning ml = new();
+        ml.PrintNepal();
+        ml.PrintNepalNTimes(10);
+        var x = ml.GetInitials("Milan sfafsdf Dhakal");
+        Console.WriteLine(x);
     }
 }
