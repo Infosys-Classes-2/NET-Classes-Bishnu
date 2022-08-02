@@ -12,7 +12,10 @@ class TestClasses
         // cow.type = "Cow";
         // cow.PrintDetails();
 
-        BranchesAndLoops br = new();
-        br.LearnLooping();
+        // BranchesAndLoops br = new();
+        // br.LearnLooping();
+
+        Assignment2 assignment2 = new();
+        assignment2.PrintPattern();
     }
 }
