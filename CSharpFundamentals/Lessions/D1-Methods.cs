@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 public class MethodLearning
 {
@@ -8,7 +9,7 @@ public class MethodLearning
         Console.WriteLine("Nepal");
     }
     // returns nothing, take some arguments
-    public void PrintNepalNTimes(int n)
+    public void PrintNepal(int n)
     {
         for (int i = 0; i < n; i++)
         {
@@ -38,21 +39,58 @@ public class MethodLearning
     // returns multiple values, take no/some arguments
     public (short, short) GetMinMax(short[] numbers)
     {
+        // Imperative
         short min = short.MaxValue;
         short max = short.MinValue;
 
-        foreach(short num in numbers)
+        foreach (short num in numbers)
         {
-            if(num < min)
+            if (num < min)
                 min = num;
-            
-            if(num > max)
+
+            if (num > max)
                 max = num;
         }
 
         return (min, max); //tuple
     }
-    
-    // variable number of arguments, named parameters, optional parameters 
 
+    public (short, short) GetMinimumMaximum(short[] numbers)
+    {
+        // Declarative
+        short min = numbers.Min();
+        short max = numbers.Max();
+
+        return (min, max); //tuple
+    }
+
+    // variable number of arguments, named parameters, optional parameters 
+    public void Test()
+    {
+        // Named parameters
+        Add(y: 45, x: 23);
+
+        Multiply(23.4, 56.7);
+        Multiply(23.4, 56.7, 67.8);
+
+        PrintText("Bishnu");
+        PrintText("Bishnu", "Ram", "John", "Kamal");
+    }
+
+    public double Multiply(double x, double y, double z = 1)
+    {
+        return x * y * z;
+    }
+
+    public void PrintText(params string[] names)
+    {
+        foreach (var name in names)
+        {
+            Console.WriteLine(name);
+        }
+    }
+
+    // Expression bodied members, inline methods
+    public float Divide(float x, float y) => x / y;
+    
 }

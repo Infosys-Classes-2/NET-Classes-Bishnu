@@ -21,8 +21,8 @@ class TestClasses
         // assignment2.PrintPattern();
 
         MethodLearning ml = new();
-        // ml.PrintNepal();
-        // ml.PrintNepalNTimes(45);
+        ml.PrintNepal();
+        ml.PrintNepal(45);
         // var s = ml.Add(3453, 35335);//squiggle
         // var x = ml.GetInitials("Milan sfafsdf Dhakal");
         // Console.WriteLine(x);
