@@ -21,9 +21,14 @@ class TestClasses
         // assignment2.PrintPattern();
 
         MethodLearning ml = new();
-        ml.PrintNepal();
-        ml.PrintNepalNTimes(10);
-        var x = ml.GetInitials("Milan sfafsdf Dhakal");
-        Console.WriteLine(x);
+        // ml.PrintNepal();
+        // ml.PrintNepalNTimes(45);
+        // var s = ml.Add(3453, 35335);//squiggle
+        // var x = ml.GetInitials("Milan sfafsdf Dhakal");
+        // Console.WriteLine(x);
+
+        short[] ages = {45, 56, 23, 34, 12, -23, -12, 0};
+        var (min, max) = ml.GetMinMax(ages);
+        Console.WriteLine($"Minimum: {min}, Maximum: {max}");
     }
 }

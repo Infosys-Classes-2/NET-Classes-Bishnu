@@ -23,10 +23,10 @@ public class MethodLearning
         return sum;
     }
 
-    // input- Bishnu Singh sdfasfd Rawal, output - BR
+    // input- Bishnu Singh Rawal, output - BR
     public string GetInitials(string fullName)
     {
-        var nameParts = fullName.Split(" ");
+        var nameParts = fullName.Split(" ");//Delimiter
         var len = nameParts.Length;
         var first = nameParts[0][0];
         var last = nameParts[len - 1][0];
@@ -36,7 +36,23 @@ public class MethodLearning
     }
 
     // returns multiple values, take no/some arguments
+    public (short, short) GetMinMax(short[] numbers)
+    {
+        short min = short.MaxValue;
+        short max = short.MinValue;
 
+        foreach(short num in numbers)
+        {
+            if(num < min)
+                min = num;
+            
+            if(num > max)
+                max = num;
+        }
+
+        return (min, max); //tuple
+    }
+    
     // variable number of arguments, named parameters, optional parameters 
 
 }
