@@ -23,5 +23,6 @@
      *******
     *********
     ```
+1. Modify (1) and (2) to use functions.
 
 ## Projects
