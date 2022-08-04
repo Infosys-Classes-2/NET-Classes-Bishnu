@@ -25,7 +25,7 @@
     ```
 1. Modify (1) and (2) to use functions.
 1. Think of a scenario where you can design your classes and interfaces as in the diagram below:
-![alt text](https://github.com/binbsr/.NETClassesCotiviti/blob/master/BishnuRawal/Homework/ClassDiagram.png)
+![alt text](https://github.com/Infosys-Classes-2/NET-Classes-Bishnu/blob/main/CSharpFundamentals/AssignmentSolutions/ClassDiagram.png)
 
 Also make sure,
 >1. Base class 1 should have a method that can be overriden by child classes  
