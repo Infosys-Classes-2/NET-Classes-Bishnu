@@ -1,7 +1,7 @@
 // Animal 
 using System;
 
-internal class Animal
+internal class Animal1
 {
     // Members: fields, methods
     // Access modifiers: public, private, internal, protected
