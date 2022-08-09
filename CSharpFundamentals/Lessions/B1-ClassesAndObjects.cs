@@ -1,6 +1,7 @@
 // Animal 
 using System;
 
+namespace AboutClasses;
 internal class Animal1
 {
     // Members: fields, methods

@@ -1,4 +1,5 @@
 using System;
+using AboutClasses;
 
 class TestClasses
 {
@@ -20,7 +21,7 @@ class TestClasses
         // Assignment2 assignment2 = new();
         // assignment2.PrintPattern();
 
-        // MethodLearning ml = new();
+        MethodLearning ml = new();
         // ml.PrintNepal();
         // ml.PrintNepal(45);
         // var s = ml.Add(3453, 35335);//squiggle
@@ -33,5 +34,7 @@ class TestClasses
 
         Shape2D shape = new("Rectangle");
         shape.PrintDetail();
+
+        Animal1 a = new();
     }
 }

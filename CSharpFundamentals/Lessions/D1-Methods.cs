@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 
+namespace AboutClasses;
 public class MethodLearning
 {
     // returns nothing, take no arguments

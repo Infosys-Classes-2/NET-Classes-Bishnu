@@ -1,5 +1,6 @@
 using System;
 
+namespace AboutClasses;
 public class Shape2D
 {    
     // Default constructor - parameterless
