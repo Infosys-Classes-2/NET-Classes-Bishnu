@@ -24,6 +24,14 @@
     *********
     ```
 1. Modify (1) and (2) to use functions.
+
+### Aug 10, 2022
+1. Write a C# program to calculate product of digits of a number
+1. Write a C# function to display the nth Fibonacci number.
+1. Write a C# program to print binary equivalent of an integer.
+
+### Class/Interface Design, (Level - Hard)
+
 1. Think of a scenario where you can design your classes and interfaces as in the diagram below:
 ![alt text](https://github.com/Infosys-Classes-2/NET-Classes-Bishnu/blob/main/CSharpFundamentals/AssignmentSolutions/ClassDiagram.png)
 
