@@ -21,7 +21,7 @@ class TestClasses
         // Assignment2 assignment2 = new();
         // assignment2.PrintPattern();
 
-        MethodLearning ml = new();
+        //MethodLearning ml = new();
         // ml.PrintNepal();
         // ml.PrintNepal(45);
         // var s = ml.Add(3453, 35335);//squiggle
@@ -32,9 +32,21 @@ class TestClasses
         // var (min, max) = ml.GetMinMax(ages);
         // Console.WriteLine($"Minimum: {min}, Maximum: {max}");
 
-        Shape2D shape = new("Rectangle");
-        shape.PrintDetail();
+        //Shape2D shape = new("Rectangle");
+        //shape.PrintDetail();
 
-        Animal1 a = new();
+        //Animal1 a = new();
+
+        Assignment3 a = new();
+        // var product = a.GetProductAscii(1234);
+        // Console.WriteLine(product);
+
+        // var x = a.GetNthFibIterative(45);
+        // Console.WriteLine("Interative: " + x);
+        // var y = a.GetNthFib(45);
+        // Console.WriteLine("Recursive: " + y);
+
+        var r = a.GetBinary(8);
+        Console.WriteLine(r);
     }
 }
