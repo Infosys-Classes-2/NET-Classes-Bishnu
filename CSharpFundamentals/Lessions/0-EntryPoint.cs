@@ -46,7 +46,10 @@ class TestClasses
         // var y = a.GetNthFib(45);
         // Console.WriteLine("Recursive: " + y);
 
-        var r = a.GetBinary(8);
-        Console.WriteLine(r);
+        // var r = a.GetBinary(8);
+        // Console.WriteLine(r);
+
+        LINQ l = new();
+        l.LearnLINQ();
     }
 }
