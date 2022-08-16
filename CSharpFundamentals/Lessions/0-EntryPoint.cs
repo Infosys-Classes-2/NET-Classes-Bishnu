@@ -49,7 +49,13 @@ class TestClasses
         // var r = a.GetBinary(8);
         // Console.WriteLine(r);
 
-        LINQ l = new();
-        l.LearnLINQ();
+        // LINQ l = new();
+        // l.LearnLINQ();
+
+        // LearnParallel lp = new();
+        // lp.Do();
+
+        FileIO fileIO = new();
+        fileIO.Do();
     }
 }
