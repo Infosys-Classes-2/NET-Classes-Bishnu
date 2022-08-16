@@ -30,6 +30,9 @@
 1. Write a C# function to display the nth Fibonacci number.
 1. Write a C# program to print binary equivalent of an integer.
 
+### Aug 16, 2022
+1. Write a C# program to create 10 folders, in each folder a text should be created with its meta information as content.
+
 ### Class/Interface Design, (Level - Hard)
 
 1. Think of a scenario where you can design your classes and interfaces as in the diagram below:
