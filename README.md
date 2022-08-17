@@ -3,6 +3,13 @@
 1. Program to capitalize entered text.
 2. Program to convert meter to feet. Output: n metre = m feet
 1. Write a function to return min, max and average of given array of numbers. Hint: GetMinMax() on module D1.
+1. Write a program to list all files/folders in a given directory in following format in console:
+
+|File/Folder Name|Create Date|Size|IsFile
+|----------|------------|------------|---------|
+|abc.txt   |        8/17/2022 |  2.3kb |   true
+|test   | 8/17/2022| 34.45mb|false|
+
 ## Assignments
 1. Program to calculate area of circle.
 1. Program to convert days to years, months, weeks and days.
