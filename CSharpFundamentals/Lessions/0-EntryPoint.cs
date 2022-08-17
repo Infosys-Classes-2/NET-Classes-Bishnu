@@ -37,7 +37,7 @@ class TestClasses
 
         //Animal1 a = new();
 
-        Assignment3 a = new();
+        // Assignment3 a = new();
         // var product = a.GetProductAscii(1234);
         // Console.WriteLine(product);
 
@@ -55,7 +55,10 @@ class TestClasses
         // LearnParallel lp = new();
         // lp.Do();
 
-        FileIO fileIO = new();
-        fileIO.Do();
+        // FileIO fileIO = new();
+        // fileIO.Do();
+
+        Assignment4 aa = new();
+        aa.CreateFolderAndFiles();
     }
 }
