@@ -6,7 +6,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Drawing;
 
 public class LearnParallel
 {
@@ -39,4 +38,21 @@ public class LearnParallel
     }
 }
 
+public class LearnAsync
+{
+    async Task GetSomething()
+    {
+        await GetSomething1();
+        await GetSomething2();
+    }
 
+    private async Task GetSomething2()
+    {
+        await Task.Delay(3000);
+    }
+
+    private async Task GetSomething1()
+    {
+        await Task.Delay(3000);
+    }
+}
