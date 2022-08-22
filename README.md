@@ -55,4 +55,10 @@ Also make sure,
 >1. Grand child should protect itself from getting inherited.
 >1. Show case all the use-cases above in Main(). 
 
+### Web development
+
+1. Create new simple web app using mvc pattern, add two new actions in existing *Home* controller:
+    1. First action should render bootstrap table with 10 rows
+    1. Second action should render carosel with 5 images to slide.
+
 ## Projects
