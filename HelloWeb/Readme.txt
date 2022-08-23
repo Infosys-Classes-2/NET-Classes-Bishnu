@@ -14,3 +14,10 @@
 
 
 - 7/8: 3/4 devs, 2-3 QA, 1 SM, 1 TPO
+
+
+Employee
+-- Add, Modify, Delete
+
+
+

@@ -61,4 +61,18 @@ Also make sure,
     1. First action should render bootstrap table with 10 rows
     1. Second action should render carosel with 5 images to slide.
 
+1. Add new action on Test Controller and display multiplication table of 5 on its corresponding view.
+
+2. Modify (2) to allow supplying a number (instead of fix 5) thorugh query parameter to get multiplication table for.
+
+1. Add new action on some controller and supply array of 40 integers to its view. Let numbers be {3, 4, 5, 6, 7, 8, 23, 15, 24 etc} then display output in view as following:
+    ```
+    Output:
+    All numbers: [3, 4, 5, 6, 7, 8, 23, 15, 24 ...]
+    Multiples of 3: [3, 6, 15 ...]
+    Multiples of 4: [4, 8, 24 ...]
+    Multiples of 5: [5, 15 ...]
+    ```
+
+
 ## Projects
