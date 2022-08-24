@@ -1,0 +1,30 @@
+﻿@model List<Employee>
+
+<h4>All employees</h4>
+
+<table class="table">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Designation</th>
+        <th>Level</th>
+        <th>Department</th>
+        <th>Join Date</th>
+        <th></th>
+    </tr>
+    @foreach (Employee employee in Model)
+    {
+        <tr>
+            <td>@employee.FirstName</td>
+            <td>@employee.LastName</td>
+            <td>@employee.Designation</td>
+            <td>@employee.Level</td>    
+            <td>@employee.Department</td>
+            <td>@employee.JoinDate</td>
+            <td>
+                <a href="/employee/edit" title="Edit"><i class="bi bi-pencil-square text-warning"></i></a>
+                <a href="/employee/delete" title="Delete"><i class="bi bi-trash3 text-danger"></i></a>
+            </td>
+        </tr>
+    }
+</table>
