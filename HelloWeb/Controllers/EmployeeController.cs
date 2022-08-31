@@ -2,17 +2,25 @@
 using HelloWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace HelloWeb.Controllers;
 
 public class EmployeeController : Controller
 {
-    EmployeeContext db = new();
+    // Tightly coupled code
+    private readonly EmployeeContext db;
+
+    // Dependency injection (DI), built-in
+    public EmployeeController(EmployeeContext _db)
+    {
+        db = _db;
+    }
 
     [HttpGet]
-    public IActionResult List()
+    public async Task<IActionResult> List()
     {   
-        var employees = db.Employees.ToList();
+        var employees = await db.Employees.ToListAsync();
 
         return View(employees);
     }
@@ -24,25 +32,25 @@ public class EmployeeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(Employee emp)  
+    public async Task<IActionResult> Add(Employee emp)  
     {        
-        db.Employees.Add(emp);
-        db.SaveChanges();
+        await db.Employees.AddAsync(emp);
+        await db.SaveChangesAsync();
 
         return RedirectToAction(nameof(List));
     }
 
-    public IActionResult Edit(int id)
+    public async Task<IActionResult> Edit(int id)
     {
-        var employee = db.Employees.Find(id);
+        var employee = await db.Employees.FindAsync(id);
         return View(employee);
     }
 
     [HttpPost]
-    public IActionResult Edit(Employee emp)
+    public async Task<IActionResult> Edit(Employee emp)
     {
         db.Employees.Update(emp);
-        db.SaveChanges();
+        await db.SaveChangesAsync();
 
         return RedirectToAction(nameof(List));
     }
