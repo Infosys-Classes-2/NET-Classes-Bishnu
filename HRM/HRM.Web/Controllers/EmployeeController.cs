@@ -1,11 +1,11 @@
-﻿using HelloWeb.Data;
-using HelloWeb.Models;
+﻿using HRM.Web.Data;
+using HRM.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace HelloWeb.Controllers;
+namespace HRM.Web.Controllers;
 
 public class EmployeeController : Controller
 {
@@ -21,7 +21,7 @@ public class EmployeeController : Controller
     [HttpGet]
     public async Task<IActionResult> List()
     {
-        var employees = await db.Employees.Include(x => x.Department).ToListAsync();
+        var employees = await db.Employees.Include(x => x.Department).Include(y => y.Designation).ToListAsync();
 
         //var queryEmployees = from employee in db.Employees
         //                     join dept in db.Departments on employee.DepartmentId equals dept.Id
@@ -43,6 +43,12 @@ public class EmployeeController : Controller
             { 
                 Text = x.Name, Value = x.Id.ToString() 
             });
+        var designations = await db.Designations.ToListAsync();
+        ViewData["Designations"] = designations.Select(x => new SelectListItem()
+        {
+            Text = x.Title,
+            Value = x.Id.ToString()
+        });
 
         return View();
     }
@@ -58,6 +64,20 @@ public class EmployeeController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
+        var departments = await db.Departments.ToListAsync();
+        ViewData["Departments"] = departments.Select(x => new SelectListItem()
+        {
+            Text = x.Name,
+            Value = x.Id.ToString()
+        });
+
+        var designations = await db.Designations.ToListAsync();
+        ViewData["Designations"] = designations.Select(x => new SelectListItem()
+        {
+            Text = x.Title,
+            Value = x.Id.ToString()
+        });
+
         var employee = await db.Employees.FindAsync(id);
         return View(employee);
     }

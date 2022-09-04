@@ -8,6 +8,7 @@ public class Employee
     public byte Level { get; set; }
     public DateTime JoinDate { get; set; }
 
+    // One employee has only one department, department has multiple employees
     public int DepartmentId { get; set; }
     public Department Department { get; set; }
 }
