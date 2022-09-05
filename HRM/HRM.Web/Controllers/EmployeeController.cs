@@ -23,15 +23,6 @@ public class EmployeeController : Controller
     {
         var employees = await db.Employees.Include(x => x.Department).Include(y => y.Designation).ToListAsync();
 
-        //var queryEmployees = from employee in db.Employees
-        //                     join dept in db.Departments on employee.DepartmentId equals dept.Id
-        //                     select new
-        //                     {
-        //                         Name = employee.FirstName,
-
-        //                         Department = dept.Name
-        //                     };
-
         return View(employees);
     }
 
@@ -56,6 +47,19 @@ public class EmployeeController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(Employee emp)
     {
+        // Save profile image to "profile-images" folder        
+        var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "profile-images");
+
+        Directory.CreateDirectory(folderPath);
+
+        var uniqueImageName = $"{Guid.NewGuid():D}_{emp.Avatar.FileName}";
+        var filePath = Path.Combine(folderPath, uniqueImageName);
+
+        using FileStream fileStream = new(filePath, FileMode.Create);
+        emp.Avatar.CopyTo(fileStream);
+        
+        emp.ProfileImage = uniqueImageName;
+
         await db.Employees.AddAsync(emp);
         await db.SaveChangesAsync();
 

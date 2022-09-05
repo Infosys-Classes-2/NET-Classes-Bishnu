@@ -1,7 +1,7 @@
 ﻿@model Employee
 
 <div class="card mt-2 p-4">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="mb-3">
             <label asp-for="FirstName" class="form-label"></label>
@@ -35,6 +35,11 @@
             <span asp-validation-for="JoinDate" class="text-danger"></span>
             <input asp-for="JoinDate" class="form-control" />
         </div>
+        <div class="mb-3">
+            <label asp-for="Avatar" class="form-label">Profile Image</label>
+            <input class="form-control" asp-for="Avatar">
+        </div>
+
         <button type="submit" class="btn btn-success"><i class="bi bi-save-fill"></i> Save Employee</button>
     </form>
 </div>
@@ -43,4 +48,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+    }

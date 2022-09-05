@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HRM.Web.Models;
 public class Employee
@@ -12,7 +13,10 @@ public class Employee
     public string LastName { get; set; }
     public byte Level { get; set; }
     public DateTime JoinDate { get; set; }
-    public byte[] Avatar { get; set; }
+    
+    [NotMapped]
+    public IFormFile Avatar { get; set; }
+    public string? ProfileImage { get; set; }
 
     // One employee has only one department, department has multiple employees
     public int DepartmentId { get; set; }
