@@ -19,9 +19,14 @@ public class EmployeeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(string searchText)
     {
-        var employees = await db.Employees.Include(x => x.Department).Include(y => y.Designation).ToListAsync();
+        var employees = await db.Employees
+            .Where(e => string.IsNullOrEmpty(searchText)  //Short-circuit
+                    || e.FirstName.Contains(searchText) 
+                    || e.LastName.Contains(searchText))
+            .Include(x => x.Department)
+            .Include(y => y.Designation).ToListAsync();
 
         return View(employees);
     }
@@ -30,10 +35,11 @@ public class EmployeeController : Controller
     public async Task<IActionResult> Add()
     {
         var departments = await db.Departments.ToListAsync();
-        ViewData["Departments"] = departments.Select(x => new SelectListItem() 
-            { 
-                Text = x.Name, Value = x.Id.ToString() 
-            });
+        ViewData["Departments"] = departments.Select(x => new SelectListItem()
+        {
+            Text = x.Name,
+            Value = x.Id.ToString()
+        });
         var designations = await db.Designations.ToListAsync();
         ViewData["Designations"] = designations.Select(x => new SelectListItem()
         {
@@ -47,18 +53,7 @@ public class EmployeeController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(Employee emp)
     {
-        // Save profile image to "profile-images" folder        
-        var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "profile-images");
-
-        Directory.CreateDirectory(folderPath);
-
-        var uniqueImageName = $"{Guid.NewGuid():D}_{emp.Avatar.FileName}";
-        var filePath = Path.Combine(folderPath, uniqueImageName);
-
-        using FileStream fileStream = new(filePath, FileMode.Create);
-        emp.Avatar.CopyTo(fileStream);
-        
-        emp.ProfileImage = uniqueImageName;
+        emp.ProfileImage = SaveProfileImage(emp.Avatar);
 
         await db.Employees.AddAsync(emp);
         await db.SaveChangesAsync();
@@ -89,6 +84,11 @@ public class EmployeeController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(Employee emp)
     {
+        if (emp.Avatar is not null)
+        {
+            emp.ProfileImage = SaveProfileImage(emp.Avatar);
+        }
+
         db.Employees.Update(emp);
         await db.SaveChangesAsync();
 
@@ -109,6 +109,23 @@ public class EmployeeController : Controller
 
         return RedirectToAction(nameof(List));
     }
+
+    private string SaveProfileImage(IFormFile avatar)
+    {
+        // Save profile image to "profile-images" folder        
+        var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "profile-images");
+
+        Directory.CreateDirectory(folderPath);
+
+        var uniqueImageName = $"{Guid.NewGuid():D}_{avatar.FileName}";
+        var filePath = Path.Combine(folderPath, uniqueImageName);
+
+        using FileStream fileStream = new(filePath, FileMode.Create);
+        avatar.CopyTo(fileStream);
+
+        return uniqueImageName;
+    }
+
 
     // Using ADO.NET
     public void GetPeople()
