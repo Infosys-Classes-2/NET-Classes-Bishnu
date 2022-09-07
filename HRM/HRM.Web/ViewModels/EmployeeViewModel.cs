@@ -1,28 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HRM.Web.Models;
-public class Employee
+namespace HRM.Web.ViewModels;
+public class EmployeeViewModel
 {
     public int Id { get; set; }
 
     [Required(ErrorMessage = "We need your first name")]
     [Display(Name = "Your First Name")]
     public string FirstName { get; set; }
-    
+
+    [Required(ErrorMessage = "We need your last name")]
+    [Display(Name = "Your Last Name")]
     public string LastName { get; set; }
+
     public byte Level { get; set; }
     public DateTime JoinDate { get; set; }
-    
-    [NotMapped]
+    public bool? Active { get; set; }
+
     public IFormFile Avatar { get; set; }
     public string? ProfileImage { get; set; }
 
-    // One employee has only one department, department has multiple employees
     public int DepartmentId { get; set; }
-    public Department Department { get; set; }
+    public string DepartmentName { get; set; }
 
-    // One employee has only one designation, single designation can be for multiple employees
     public int DesignationId { get; set; }
-    public Designation Designation { get; set; }
+    public string DesignationName { get; set; }
 }

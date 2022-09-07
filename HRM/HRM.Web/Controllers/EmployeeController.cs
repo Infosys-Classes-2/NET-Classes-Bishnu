@@ -1,5 +1,7 @@
 ﻿using HRM.Web.Data;
+using HRM.Web.Mapper;
 using HRM.Web.Models;
+using HRM.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -22,13 +24,13 @@ public class EmployeeController : Controller
     public async Task<IActionResult> List(string searchText)
     {
         var employees = await db.Employees
-            .Where(e => string.IsNullOrEmpty(searchText)  //Short-circuit
+            .Where(e => e.Active.Value && (string.IsNullOrEmpty(searchText)  //Short-circuit
                     || e.FirstName.Contains(searchText) 
-                    || e.LastName.Contains(searchText))
+                    || e.LastName.Contains(searchText)))
             .Include(x => x.Department)
             .Include(y => y.Designation).ToListAsync();
 
-        return View(employees);
+        return View(employees.ToViewModel());
     }
 
     [HttpGet]
@@ -51,9 +53,12 @@ public class EmployeeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(Employee emp)
+    public async Task<IActionResult> Add(EmployeeViewModel employeeViewModel)
     {
-        emp.ProfileImage = SaveProfileImage(emp.Avatar);
+        employeeViewModel.ProfileImage = SaveProfileImage(employeeViewModel.Avatar);
+        employeeViewModel.Active = true;
+
+        var emp = employeeViewModel.ToModel();
 
         await db.Employees.AddAsync(emp);
         await db.SaveChangesAsync();
@@ -78,16 +83,18 @@ public class EmployeeController : Controller
         });
 
         var employee = await db.Employees.FindAsync(id);
-        return View(employee);
+
+        return View(employee.ToViewModel());
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(Employee emp)
+    public async Task<IActionResult> Edit(EmployeeViewModel employeeViewModel)
     {
-        if (emp.Avatar is not null)
+        if (employeeViewModel.Avatar is not null)
         {
-            emp.ProfileImage = SaveProfileImage(emp.Avatar);
+            employeeViewModel.ProfileImage = SaveProfileImage(employeeViewModel.Avatar);
         }
+        var emp = employeeViewModel.ToModel();
 
         db.Employees.Update(emp);
         await db.SaveChangesAsync();
@@ -102,9 +109,13 @@ public class EmployeeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Delete(Employee emp)
+    public async Task<IActionResult> Delete(Employee emp)
     {
-        db.Employees.Remove(emp);
+        //db.Employees.Remove(emp);
+        var employee = await db.Employees.FindAsync(emp.Id);
+
+        employee.Active = false;
+
         db.SaveChanges();
 
         return RedirectToAction(nameof(List));
