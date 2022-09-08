@@ -2,6 +2,7 @@
 using HRM.Web.Mapper;
 using HRM.Web.Models;
 using HRM.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -33,7 +34,7 @@ public class EmployeeController : Controller
         return View(employees.ToViewModel());
     }
 
-    [HttpGet]
+    [HttpGet, Authorize]
     public async Task<IActionResult> Add()
     {
         var departments = await db.Departments.ToListAsync();

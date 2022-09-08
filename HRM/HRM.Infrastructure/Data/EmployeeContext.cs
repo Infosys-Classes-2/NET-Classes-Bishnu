@@ -1,9 +1,10 @@
 ﻿using HRM.Web.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRM.Web.Data
 {
-    public class EmployeeContext: DbContext
+    public class EmployeeContext: IdentityDbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
