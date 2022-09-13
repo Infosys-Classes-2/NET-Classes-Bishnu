@@ -1,15 +1,19 @@
 using HRM.Web.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<EmployeeContext>();
+builder.Services.AddDbContext<EmployeeContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("hrmConnection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => 
     options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<EmployeeContext>();
+
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
