@@ -1,4 +1,4 @@
-﻿using HRM.Web.Data;
+﻿using HRM.Infrastructure.Repositories;
 using HRM.Web.Mapper;
 using HRM.Web.Models;
 using HRM.Web.ViewModels;
@@ -6,30 +6,29 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 
 namespace HRM.Web.Controllers;
 
 public class EmployeeController : Controller
 {
-    // Tightly coupled code
-    private readonly EmployeeContext db;
+    private readonly EmployeeRepository employeeRepository;
+    private readonly DepartmentRepository departmentRepository;
+    private readonly DesignationRepository designationRepository;
 
     // Dependency injection (DI), built-in
-    public EmployeeController(EmployeeContext _db)
+    public EmployeeController(EmployeeRepository employeeRepository, 
+        DepartmentRepository departmentRepository,
+        DesignationRepository designationRepository)
     {
-        db = _db;
+        this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
+        this.designationRepository = designationRepository;
     }
 
     [HttpGet]
     public async Task<IActionResult> List(string searchText)
     {
-        var employees = await db.Employees
-            .Where(e => e.Active.Value && (string.IsNullOrEmpty(searchText)  //Short-circuit
-                    || e.FirstName.Contains(searchText) 
-                    || e.LastName.Contains(searchText)))
-            .Include(x => x.Department)
-            .Include(y => y.Designation).ToListAsync();
+        var employees = await employeeRepository.GetAllAsync(searchText);
 
         return View(employees.ToViewModel());
     }
@@ -37,13 +36,13 @@ public class EmployeeController : Controller
     [HttpGet, Authorize]
     public async Task<IActionResult> Add()
     {
-        var departments = await db.Departments.ToListAsync();
+        var departments = await departmentRepository.GetAll();
         ViewData["Departments"] = departments.Select(x => new SelectListItem()
         {
             Text = x.Name,
             Value = x.Id.ToString()
         });
-        var designations = await db.Designations.ToListAsync();
+        var designations = await designationRepository.GetAll();
         ViewData["Designations"] = designations.Select(x => new SelectListItem()
         {
             Text = x.Title,
@@ -61,29 +60,28 @@ public class EmployeeController : Controller
 
         var emp = employeeViewModel.ToModel();
 
-        await db.Employees.AddAsync(emp);
-        await db.SaveChangesAsync();
+        employeeRepository.InsertAsync(emp);
 
         return RedirectToAction(nameof(List));
     }
 
     public async Task<IActionResult> Edit(int id)
     {
-        var departments = await db.Departments.ToListAsync();
+        var departments = await departmentRepository.GetAll();
         ViewData["Departments"] = departments.Select(x => new SelectListItem()
         {
             Text = x.Name,
             Value = x.Id.ToString()
         });
 
-        var designations = await db.Designations.ToListAsync();
+        var designations = await designationRepository.GetAll();
         ViewData["Designations"] = designations.Select(x => new SelectListItem()
         {
             Text = x.Title,
             Value = x.Id.ToString()
         });
 
-        var employee = await db.Employees.FindAsync(id);
+        var employee = await employeeRepository.GetAsync(id);
 
         return View(employee.ToViewModel());
     }
@@ -97,15 +95,14 @@ public class EmployeeController : Controller
         }
         var emp = employeeViewModel.ToModel();
 
-        db.Employees.Update(emp);
-        await db.SaveChangesAsync();
+        await employeeRepository.EditAsync(emp);
 
         return RedirectToAction(nameof(List));
     }
 
     public IActionResult Delete(int id)
     {
-        var employee = db.Employees.Find(id);
+        var employee = employeeRepository.GetAsync(id);
         return View(employee);
     }
 
@@ -113,11 +110,11 @@ public class EmployeeController : Controller
     public async Task<IActionResult> Delete(Employee emp)
     {
         //db.Employees.Remove(emp);
-        var employee = await db.Employees.FindAsync(emp.Id);
+        var employee = await employeeRepository.GetAsync(emp.Id);
 
         employee.Active = false;
 
-        db.SaveChanges();
+        employeeRepository.CommitAsync();
 
         return RedirectToAction(nameof(List));
     }

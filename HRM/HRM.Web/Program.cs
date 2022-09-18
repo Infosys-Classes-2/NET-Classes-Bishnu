@@ -1,3 +1,4 @@
+using HRM.Infrastructure.Repositories;
 using HRM.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +10,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<EmployeeContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("hrmConnection")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => 
+builder.Services.AddScoped<EmployeeRepository>();
+builder.Services.AddScoped<DepartmentRepository>();
+builder.Services.AddScoped<DesignationRepository>();
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<EmployeeContext>();
 
 builder.Services.AddRazorPages();

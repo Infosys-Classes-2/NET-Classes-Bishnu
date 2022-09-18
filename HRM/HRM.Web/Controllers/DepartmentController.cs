@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HRM.Web.Data;
 using HRM.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HRM.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DepartmentController : Controller
     {
         private readonly EmployeeContext _context;
