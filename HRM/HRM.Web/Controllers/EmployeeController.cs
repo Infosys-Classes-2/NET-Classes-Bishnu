@@ -36,7 +36,7 @@ public class EmployeeController : Controller
     [HttpGet, Authorize]
     public async Task<IActionResult> Add()
     {
-        var departments = await departmentRepository.GetAll();
+        var departments = await departmentRepository.GetAllAsync();
         ViewData["Departments"] = departments.Select(x => new SelectListItem()
         {
             Text = x.Name,
@@ -67,7 +67,7 @@ public class EmployeeController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
-        var departments = await departmentRepository.GetAll();
+        var departments = await departmentRepository.GetAllAsync();
         ViewData["Departments"] = departments.Select(x => new SelectListItem()
         {
             Text = x.Name,
@@ -100,10 +100,10 @@ public class EmployeeController : Controller
         return RedirectToAction(nameof(List));
     }
 
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var employee = employeeRepository.GetAsync(id);
-        return View(employee);
+        var employee = await employeeRepository.GetAsync(id);
+        return View(employee.ToViewModel());
     }
 
     [HttpPost]

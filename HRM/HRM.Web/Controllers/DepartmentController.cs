@@ -1,50 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using HRM.Web.Data;
 using HRM.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using HRM.Infrastructure.Repositories;
+using HRM.Web.Mapper;
 
 namespace HRM.Web.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class DepartmentController : Controller
     {
-        private readonly EmployeeContext _context;
+        private readonly DepartmentRepository departmentRepository;
 
-        public DepartmentController(EmployeeContext context)
+        public DepartmentController(DepartmentRepository departmentRepository)
         {
-            _context = context;
+            this.departmentRepository = departmentRepository;
         }
 
         // GET: Department
         public async Task<IActionResult> Index()
         {
-              return _context.Departments != null ? 
-                          View(await _context.Departments.ToListAsync()) :
-                          Problem("Entity set 'EmployeeContext.Departments'  is null.");
+            var departments = await departmentRepository.GetAllAsync();
+            var departmentViewModels = departments.ToViewModel();
+
+            return departmentViewModels != null ?
+                        View(departmentViewModels) :
+                        Problem("No Departments exist on database.");
         }
 
         // GET: Department/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Departments == null)
-            {
-                return NotFound();
-            }
-
-            var department = await _context.Departments
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var department = await departmentRepository.GetAsync(id.Value);
             if (department == null)
             {
                 return NotFound();
             }
 
-            return View(department);
+            return View(department.ToViewModel());
         }
 
         // GET: Department/Create
@@ -60,8 +53,7 @@ namespace HRM.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(department);
-                await _context.SaveChangesAsync();
+                await departmentRepository.InsertAsync(department);
                 return RedirectToAction(nameof(Index));
             }
             return View(department);
@@ -70,12 +62,7 @@ namespace HRM.Web.Controllers
         // GET: Department/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Departments == null)
-            {
-                return NotFound();
-            }
-
-            var department = await _context.Departments.FindAsync(id);
+            var department = await departmentRepository.GetAsync(id.Value);
             if (department == null)
             {
                 return NotFound();
@@ -99,8 +86,7 @@ namespace HRM.Web.Controllers
             {
                 try
                 {
-                    _context.Update(department);
-                    await _context.SaveChangesAsync();
+                    await departmentRepository.EditAsync(department);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,13 +107,7 @@ namespace HRM.Web.Controllers
         // GET: Department/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Departments == null)
-            {
-                return NotFound();
-            }
-
-            var department = await _context.Departments
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var department = await departmentRepository.GetAsync(id.Value);
             if (department == null)
             {
                 return NotFound();
@@ -141,23 +121,19 @@ namespace HRM.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Departments == null)
-            {
-                return Problem("Entity set 'EmployeeContext.Departments'  is null.");
-            }
-            var department = await _context.Departments.FindAsync(id);
+            var department = await departmentRepository.GetAsync(id);
             if (department != null)
             {
-                _context.Departments.Remove(department);
+                await departmentRepository.DeleteAsync(department);
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool DepartmentExists(int id)
         {
-          return (_context.Departments?.Any(e => e.Id == id)).GetValueOrDefault();
+            var department = departmentRepository.GetAsync(id).Result;
+            return department != null;
         }
     }
 }
