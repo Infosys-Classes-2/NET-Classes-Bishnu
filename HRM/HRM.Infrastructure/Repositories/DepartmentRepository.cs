@@ -1,6 +1,5 @@
-﻿using HRM.Web.Data;
-using HRM.Web.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using HRM.ApplicationCore.Models;
+using HRM.Web.Data;
 
 namespace HRM.Infrastructure.Repositories
 {

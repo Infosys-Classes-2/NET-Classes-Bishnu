@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using HRM.Web.Models;
+using HRM.ApplicationCore.Models;
 using Microsoft.AspNetCore.Authorization;
 using HRM.Infrastructure.Repositories;
 using HRM.Web.Mapper;

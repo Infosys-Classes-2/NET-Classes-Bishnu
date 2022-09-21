@@ -1,4 +1,5 @@
-﻿using HRM.Web.Data;
+﻿using HRM.ApplicationCore.Models;
+using HRM.Web.Data;
 using HRM.Web.Models;
 using Microsoft.EntityFrameworkCore;
 
